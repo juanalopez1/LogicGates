@@ -8,46 +8,33 @@ public class OrGate : LogicGate
     }
     public override bool ValidateInputs()
     {
-        return (this.Inputs.Count + this.InputGate.Count >= 2) ? true : false;
+        return (this.Inputs.Count >= 2) ? true : false;
     }
     public override int ExitCalculator()
     {
         if (ValidateInputs() == true)
         {
-            if (this.InputGate.Count > 0)
+            int finalExit = 0;
+
+            foreach (int input in this.Inputs)
             {
-                int finalExit = 0;
+                finalExit += input;
+            }
 
-                foreach (int input in this.Inputs)
-                {
-                    finalExit += input;
-                }
-
-                foreach (LogicGate gate in this.InputGate)
-                {
-                    finalExit += gate.ExitCalculator();
-                }
-
-                return finalExit;
+            if (finalExit > 0)
+            {
+                return 1;
             }
             else
             {
-                int finalExit = 0;
-
-                foreach (int input in this.Inputs)
-                {
-                    finalExit += input;
-                }
-
-                return finalExit;
+                return 0;
             }
-
         }
         else
         {
-            throw new Exception("numero de entradas invalido");
+            throw new Exception("Numero de entradas invalido");
         }
 
     }
-
 }
+
